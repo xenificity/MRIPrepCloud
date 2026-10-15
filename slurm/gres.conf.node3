@@ -1,0 +1,5 @@
+# Node3: 2x Quadro RTX 6000 (23 GB). Shards per GPU set by deploy script (SHARDS_RTX).
+Name=gpu File=/dev/nvidia0
+Name=gpu File=/dev/nvidia1
+Name=shard Count=SHARDS_RTX File=/dev/nvidia0
+Name=shard Count=SHARDS_RTX File=/dev/nvidia1

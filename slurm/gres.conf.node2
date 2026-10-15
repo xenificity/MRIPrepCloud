@@ -1,0 +1,3 @@
+# Node2: 1x Tesla T4 (15 GB). Shards per GPU set by deploy script (SHARDS_T4).
+Name=gpu File=/dev/nvidia0
+Name=shard Count=SHARDS_T4 File=/dev/nvidia0

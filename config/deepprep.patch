@@ -1,0 +1,82 @@
+--- a/deepprep/deepprep.sh
++++ b/deepprep/deepprep.sh
+@@ -255,4 +255,5 @@
+ -w "${nextflow_work_dir}" \
+ -with-report "${qc_dir}/report.html" \
+ -with-timeline "${qc_dir}/timeline.html" \
++-with-trace "${qc_dir}/trace.txt" \
+ "${args[@]}"
+--- a/deepprep/nextflow/deepprep.nf
++++ b/deepprep/nextflow/deepprep.nf
+@@ -834,7 +834,7 @@
+ process anat_sphere {
+     tag "${subject_id}"
+ 
+-    cpus 4
++    cpus 6  // measured ~5.6 cores used (exp3); 4 oversubscribed packed nodes
+     memory '900 MB'
+ 
+     input:
+@@ -856,7 +856,7 @@
+     tag "${subject_id}"
+ 
+     label "with_gpu"
+-    cpus 3
++    cpus 2  // measured ~1.3 cores used (exp3)
+     memory '5 GB'
+ 
+     input:
+@@ -1435,7 +1435,7 @@
+ process bold_pre_process {
+     tag "${bold_id}"
+ 
+-    cpus 4
++    cpus 2  // exp9: measured ~2 cores used at cpus 4 (DS-I..VI)
+     memory '5 GB'
+ 
+     input:
+@@ -1882,7 +1882,7 @@
+     tag "${subject_id}"
+ 
+     label "with_gpu"
+-    cpus 4  // only use one with --device=cpu
++    cpus 2  // only use one with --device=cpu; measured ~1 core on GPU (exp3)
+     memory '10 GB'
+ 
+     input:
+@@ -1922,7 +1922,7 @@
+     // 22202
+     tag "${subject_id}"
+ 
+-    cpus 4
++    cpus 2  // measured ~1 core on GPU (exp3)
+     label "with_gpu"
+     memory '19 GB'
+ 
+@@ -1964,7 +1964,7 @@
+     // 22954
+     tag "${subject_id}"
+ 
+-    cpus 4
++    cpus 2  // measured ~1 core on GPU (exp3)
+     label "with_gpu"
+     memory '11.5 GB'
+ 
+@@ -2040,7 +2040,7 @@
+     // 8660
+     tag "${bold_id}"
+ 
+-    cpus 4
++    cpus 2  // measured ~1 core on GPU (exp3)
+     label "with_gpu"
+     memory '15 GB'
+ 
+@@ -2119,7 +2119,7 @@
+ process bold_transform_chain {
+     tag "${bold_id}"
+ 
+-    cpus 4
++    cpus 2  // exp9: measured ~2 cores used at cpus 4 (DS-I..VI)
+     memory { 4.GB * task.attempt }
+ 
+     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
